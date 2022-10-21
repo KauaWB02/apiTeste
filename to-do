@@ -1,0 +1,6 @@
+Criar uma api de teste de pessoas e caracteristicas.
+
+vamos precisar cadastrar uma pessoa com os seguintes informações.
+
+    nome,sobrenome,idade,sexo,altura,peso,descrição sobre ela.
+
