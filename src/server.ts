@@ -1,6 +1,6 @@
 import express from 'express';
 import colors from 'colors';
-import routes from './routes/routeControllers';
+import routes from './routes/routerAgendaControllers';
 
 const app: express.Application = express();
 

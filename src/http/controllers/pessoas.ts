@@ -22,6 +22,7 @@ class controllerPessoa {
                 }).then((data: any) => {
 
                 }).catch((error: any) => {
+                    message = { message: error.message }
 
                 });
             message = { message: 'Usuário(a) salvo(a)' }
