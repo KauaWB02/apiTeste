@@ -1,6 +1,22 @@
-import { Router, Request, Response, RouterOptions } from "express";
+import { Router, Request, Response } from "express";
+import controllers from '../http/controllers/pessoas';
+import IPERSONS from "../http/interface/pessoas";
 
-const routes:Router = Router();
+const routes: Router = Router();
 
-//routes.get("list",)
-export const routesController: Router = routes;
+const controller = new controllers();
+
+routes.get('/list', async (req: Request, res: Response) => {
+    let lista = await controller.listarPessoas();
+    return res.json(lista)
+});
+
+routes.post('/create', async (req: Request, res: Response) => {
+    const user:IPERSONS = req.body;
+    let create = await controller.inserirPessoa(user)
+    return res.json(create)
+});
+
+
+
+export default routes;
