@@ -1,10 +1,8 @@
 import express from 'express';
 import colors from 'colors';
 import routes from './routes/routerAgendaControllers';
-
+import cors from 'cors';
 const app: express.Application = express();
-
-const cors = require('./config/cors')
 
 // https://www.section.io/engineering-education/how-to-use-cors-in-nodejs-with-express/ 
 // Documentação para estudar pacero

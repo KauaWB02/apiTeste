@@ -4,6 +4,9 @@ import IPERSONS from '../interface/pessoas';
 class controllerPessoa {
     private conn = dbMysqlConnect.conexao();
 
+    public async buscaPessia(id: any) {
+        let pessoa: IPERSONS;
+    }
     public async deletePessoa(id: Number) {
         let message: any
 
