@@ -1,22 +1,47 @@
 import dbMysqlConnect from '../../database/dbMysql';
 import IPERSONS from '../interface/pessoas';
+import colors from 'colors';
 
 class controllerPessoa {
-    private conn = dbMysqlConnect.conexao();
 
-    public async buscaPessia(id: any) {
-        let pessoa: IPERSONS;
+    public async busca(caracteristicas: IPERSONS) {
+        let nome = caracteristicas.nome;
+        let telefone = caracteristicas.telefone;
+        let conn = dbMysqlConnect.conexao();
+        let message: any;
+        // Select nome,telefone from tb_usuarios where nome,telefone like ´${carct.nome}%,´;
+
+        try {
+            await conn.table('tb_usuarios').select('nome', 'telefone')
+                .whereiLike('nome', `%${nome}`)
+                .andWhereILike('telefone', `%${telefone}`)
+                .then((data: any) => {
+                    console.log(data)
+                }).catch((error: any) => {
+                    message = error.message;
+                })
+        } catch (error) {
+            console.log(colors.red(error))
+        }
+
+        return message;
     }
-    public async deletePessoa(id: Number) {
+    // Fazer dele a tarde caso tenha nada para fazer..
+    public async deletePessoa(id: any) {
         let message: any
+        let conn = dbMysqlConnect.conexao();
+
+
+
 
         return message;
     }
     public async editarPessoa(id: any, pessoa: IPERSONS) {
         let idPessoa = id;
         let message: any;
+        let conn = dbMysqlConnect.conexao();
         try {
-            await this.conn.table('tb_usuarios').returing('id').where({
+            await conn.table('tb_usuarios').returing('id').where({
                 id: idPessoa,
             }).update({ //Obrigatorio a a ter no json nome,sobre nome, telefone
                 nome: pessoa.nome,
@@ -35,7 +60,7 @@ class controllerPessoa {
                 message = { message: error.message }
             })
         } catch (error) {
-            console.log(error.message);
+            console.log(colors.red(error.message));
         }
 
 
@@ -43,8 +68,9 @@ class controllerPessoa {
     }
     public async inserirPessoa(pessoa: IPERSONS) {
         let message: any;
+        let conn = dbMysqlConnect.conexao();
         try {
-            await this.conn.table('tb_usuarios').returing('nome')
+            await conn.table('tb_usuarios').returing('nome')
                 .insert({
                     nome: pessoa.nome,
                     sobre_Nome: pessoa.sobreNome,
@@ -63,7 +89,7 @@ class controllerPessoa {
 
                 });
         } catch (error) {
-            console.log(error)
+            console.log(colors.red(error))
         }
 
         return message;
@@ -71,11 +97,12 @@ class controllerPessoa {
     }
 
     public async listarPessoas() {
+        let conn = dbMysqlConnect.conexao();
         let pessoas: any = {};
         let alerta: String = '';
         let verificar: boolean = true;
 
-        await this.conn.table('tb_usuarios')
+        await conn.table('tb_usuarios')
             .select()
             .then((data: any) => {
                 pessoas = data;
